@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DailyNews</string>
+    <string name="SplashTitle">Daily News</string>
 </resources>
