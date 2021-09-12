@@ -1,8 +1,8 @@
 package com.example.dailynews;
 
 public class NewsModel {
-   String ImageUrl;
-   String Author,NewsTitle;
+   static String ImageUrl;
+   static String Author,NewsTitle;
 
     public NewsModel(String imageUrl, String author, String newsTitle) {
         ImageUrl = imageUrl;
