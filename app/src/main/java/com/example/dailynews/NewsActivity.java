@@ -43,6 +43,7 @@ private static Response response;
 private static String tempAuthor,tempTitle,tempImage;
 private static String requestResponseString;
 private static JSONObject tempJsonObject;
+ NewsAdapter adapter;
 private  String NEWS_URL="https://newsapi.org/v2/top-headlines/sources?apiKey=0ff8e45f66b141b78a98f8ae83959841";
 
     @Override
@@ -55,22 +56,13 @@ private  String NEWS_URL="https://newsapi.org/v2/top-headlines/sources?apiKey=0f
         request=new Request.Builder().url(NEWS_URL).get().build();
 
 //      recyclerView.notify();
+
+      adapter=new NewsAdapter(getApplicationContext(),newsdata,NewsActivity.this);
+      recyclerView.setAdapter(adapter);
       fetchdata();
-      Thread t=new Thread(new Runnable() {
-          @Override
-          public void run() {
-              try {
-                  Thread.sleep(5000);
-                  fetchdata();
-              } catch (InterruptedException e) {
-//              System.out.println(newsdata.get(2).getAuthor());
-                  e.printStackTrace();
-              }
+        adapter.updateNewsList(newsdata);
+        adapter.notifyDataSetChanged();
 
-
-          }
-      });
-      t.start();
 
 
     }
@@ -98,9 +90,12 @@ private  String NEWS_URL="https://newsapi.org/v2/top-headlines/sources?apiKey=0f
                         newsdata.add(news);
 
                     }
+
+
                     System.out.println("size"+newsdata.size());
-                    NewsAdapter newsAdapter=new NewsAdapter(getApplicationContext(),newsdata,NewsActivity.this);
-                    recyclerView.setAdapter(newsAdapter);
+
+
+
 
                 } catch (IOException | JSONException e) {
                     e.printStackTrace();
@@ -108,7 +103,9 @@ private  String NEWS_URL="https://newsapi.org/v2/top-headlines/sources?apiKey=0f
             }
         });
         thread.start();
+
     }
+
 }
 
 
