@@ -26,6 +26,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.myNewsHolder> 
     public NewsAdapter(Context context, ArrayList<NewsModel> newsdata, onNewsItemClickListener newsListener) {
         this.context = context;
         this.newsdata = newsdata;
+        Log.d("count ",String.valueOf(newsdata.size()));
         this.newsListener = newsListener;
     }
 
@@ -50,6 +51,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.myNewsHolder> 
 
     @Override
     public int getItemCount() {
+
         return newsdata.size();
 //        return 1;
     }
