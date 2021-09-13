@@ -5,9 +5,9 @@ public class NewsModel {
    static String Author,NewsTitle;
 
     public NewsModel(String imageUrl, String author, String newsTitle) {
-        ImageUrl = imageUrl;
-        Author = author;
-        NewsTitle = newsTitle;
+        NewsModel.ImageUrl = imageUrl;
+        NewsModel.Author = author;
+        NewsModel.NewsTitle = newsTitle;
     }
 
     public String getImageUrl() {

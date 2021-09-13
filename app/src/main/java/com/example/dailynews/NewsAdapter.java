@@ -19,41 +19,42 @@ import java.util.ArrayList;
 
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.myNewsHolder> {
-    private Context context;
-    private ArrayList<NewsModel> newsdata;
-    private onNewsItemClickListener newsListener;
+     Context context;
+     ArrayList<NewsModel> newsdata=new ArrayList<>();
 
-    public NewsAdapter(Context context, ArrayList<NewsModel> newsdata, onNewsItemClickListener newsListener) {
+
+    public NewsAdapter(Context context, ArrayList<NewsModel> newsdata) {
         this.context = context;
         this.newsdata = newsdata;
-        Log.d("count ",String.valueOf(newsdata.size()));
-        this.newsListener = newsListener;
+
+
     }
 
     @NonNull
     @Override
     public myNewsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater=LayoutInflater.from(context);
-        View view=inflater.inflate(R.layout.singlenewsview,parent,false);
-        myNewsHolder myNewsHolder=new myNewsHolder(view);
-        return myNewsHolder;
+
+        View view=LayoutInflater.from(context).inflate(R.layout.singlenewsview,parent,false);
+        return new myNewsHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull myNewsHolder holder, int position) {
 //        Picasso.get().load(newsdata.get(position).getImageUrl()).into(holder.img);
-        NewsModel item =newsdata.get(position);
+        final NewsModel item =newsdata.get(position);
         holder.author.setText(item.getAuthor());
-        System.out.println(item.getAuthor());
-        Log.d(TAG, holder.author.getText().toString());
-        holder.title.setText(item.getNewsTitle());
+
+        System.out.println("Author : "+holder.author.getText());
+
+        holder.title.setText(item.getNewsTitle().toString());
+        System.out.println("title is : "+holder.title.getText().toString());
     }
 
     @Override
     public int getItemCount() {
 
         return newsdata.size();
-//        return 1;
+
     }
 
     public class myNewsHolder extends RecyclerView.ViewHolder {
@@ -66,7 +67,5 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.myNewsHolder> 
             title=itemView.findViewById(R.id.news_title);
         }
     }
-     void updateNewsList(ArrayList<NewsModel> list){
-        NewsAdapter.this.newsdata=list;
-    }
+
 }
