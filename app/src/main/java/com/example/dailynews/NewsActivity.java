@@ -75,7 +75,7 @@ private  String NEWS_URL="https://newsapi.org/v2/top-headlines/sources?apiKey=0f
                                     tempTitle=tempJsonObject.getString("description");
                                     tempImage=tempJsonObject.getString("url");
 //                                    NewsModel news=new NewsModel(tempImage,tempAuthor,tempTitle);
-                                    newsdata.add(new NewsModel(tempImage,tempAuthor,tempTitle));
+//                                    newsdata.add(new NewsModel(tempImage,tempAuthor,tempTitle));
                                     adapter.notifyDataSetChanged();
 
                                 }

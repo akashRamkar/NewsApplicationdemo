@@ -47,6 +47,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.myNewsHolder> 
         System.out.println("Author : "+holder.author.getText());
 
         holder.title.setText(item.getNewsTitle().toString());
+//        holder.title.setText("this is holder title");
         System.out.println("title is : "+holder.title.getText().toString());
     }
 
