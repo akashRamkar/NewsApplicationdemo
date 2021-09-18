@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -24,16 +25,19 @@ private RecyclerView recyclerView;
 private static ArrayList<NewsModel> newsdata=new ArrayList<>();
 
 
-private static String tempAuthor,tempTitle,tempImage;
+private static String tempAuthor,tempTitle,tempImage,news_src,news_link;
 private static String requestResponseString;
 private static JSONObject tempJsonObject;
  NewsAdapter adapter;
+   static Typeface typeface;
 private  String NEWS_URL="https://saurav.tech/NewsAPI/top-headlines/category/science/in.json";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
+        //setting up font typeface
+         typeface=Typeface.createFromAsset(getAssets(),"fonts/NexaBold.ttf");
 
         recyclerView=findViewById(R.id.recycler_view);
         //layout manager
@@ -65,18 +69,18 @@ private  String NEWS_URL="https://saurav.tech/NewsAPI/top-headlines/category/sci
                 try {
                     Response response=client.newCall(request).execute();
                     requestResponseString=response.body().string();
-                    Log.d("stringres",requestResponseString);
-                    Log.d("responseString",requestResponseString);
+
                     JSONObject jsonObject = new JSONObject(requestResponseString);
                     JSONArray jsonArray = jsonObject.getJSONArray("articles");
                     for (int i = 0; i < jsonArray.length(); i++) {
 
                         tempJsonObject = jsonArray.getJSONObject(i);
-
+                        news_src="null";
+                        news_link=tempJsonObject.getString("url");
                         tempAuthor = tempJsonObject.getString("author");
                         tempTitle = tempJsonObject.getString("title");
                         tempImage = tempJsonObject.getString("urlToImage");
-                        NewsModel news = new NewsModel(tempImage, tempAuthor, tempTitle);
+                        NewsModel news = new NewsModel(tempImage, tempAuthor, tempTitle,news_src,news_link);
                         //adding news-model object into news-model array
                         newsdata.add(news);
 

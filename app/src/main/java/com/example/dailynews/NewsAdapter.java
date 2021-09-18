@@ -2,6 +2,7 @@ package com.example.dailynews;
 
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.myNewsHolder> 
         holder.author.setText(item.getAuthor());
         //setting news title text
         holder.title.setText(item.getNewsTitle().toString());
-
+        holder.news_sourse.setText("source : "+item.getSource());
 
     }
 
@@ -58,13 +59,16 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.myNewsHolder> 
 
     public class myNewsHolder extends RecyclerView.ViewHolder {
         private ImageView img;
-        private TextView author, title;
+        private TextView author, title,news_sourse;
 
         public myNewsHolder(@NonNull View itemView) {
             super(itemView);
+
             img = itemView.findViewById(R.id.news_img);
             author = itemView.findViewById(R.id.news_author);
             title = itemView.findViewById(R.id.news_title);
+            news_sourse=itemView.findViewById(R.id.news_source);
+//            title.setTypeface(NewsActivity.typeface);
         }
     }
 
