@@ -1,36 +1,26 @@
 package com.example.dailynews;
 
 public class NewsModel {
-   static String ImageUrl;
-   static String Author,NewsTitle;
+    String ImageUrl;
+    String Author,NewsTitle;
 
     public NewsModel(String imageUrl, String author, String newsTitle) {
-        NewsModel.ImageUrl = imageUrl;
-        NewsModel.Author = author;
-        NewsModel.NewsTitle = newsTitle;
+        this.ImageUrl = imageUrl;
+        this.Author = author;
+        this.NewsTitle = newsTitle;
     }
 
     public String getImageUrl() {
-        return ImageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        ImageUrl = imageUrl;
+        return this.ImageUrl;
     }
 
     public String getAuthor() {
-        return Author;
-    }
-
-    public void setAuthor(String author) {
-        Author = author;
+        return this.Author;
     }
 
     public String getNewsTitle() {
-        return NewsTitle;
+        return this.NewsTitle;
     }
 
-    public void setNewsTitle(String newsTitle) {
-        NewsTitle = newsTitle;
-    }
+
 }

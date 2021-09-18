@@ -28,7 +28,7 @@ private static String tempAuthor,tempTitle,tempImage;
 private static String requestResponseString;
 private static JSONObject tempJsonObject;
  NewsAdapter adapter;
-private  String NEWS_URL="https://newsapi.org/v2/top-headlines/sources?apiKey=0ff8e45f66b141b78a98f8ae83959841";
+private  String NEWS_URL="https://saurav.tech/NewsAPI/top-headlines/category/science/in.json";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +36,16 @@ private  String NEWS_URL="https://newsapi.org/v2/top-headlines/sources?apiKey=0f
         setContentView(R.layout.activity_news);
 
         recyclerView=findViewById(R.id.recycler_view);
+        //layout manager
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        //setting layout manager to recyclerview
         recyclerView.setLayoutManager(layoutManager);
 
       adapter=new NewsAdapter(getApplicationContext(),newsdata);
       recyclerView.setAdapter(adapter);
+      //fetching news data from server and storing into news-model array
       fetchdata();
+
 
 
 
@@ -49,9 +53,10 @@ private  String NEWS_URL="https://newsapi.org/v2/top-headlines/sources?apiKey=0f
     }
 
     private  void fetchdata(){
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient().newBuilder().build();
         Request request = new Request.Builder()
                 .url(NEWS_URL)
+                .method("GET",null)
                 .get()
                 .build();
         Thread thread=new Thread(new Runnable() {
@@ -61,40 +66,31 @@ private  String NEWS_URL="https://newsapi.org/v2/top-headlines/sources?apiKey=0f
                     Response response=client.newCall(request).execute();
                     requestResponseString=response.body().string();
                     Log.d("stringres",requestResponseString);
+                    Log.d("responseString",requestResponseString);
+                    JSONObject jsonObject = new JSONObject(requestResponseString);
+                    JSONArray jsonArray = jsonObject.getJSONArray("articles");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                        tempJsonObject = jsonArray.getJSONObject(i);
+
+                        tempAuthor = tempJsonObject.getString("author");
+                        tempTitle = tempJsonObject.getString("title");
+                        tempImage = tempJsonObject.getString("urlToImage");
+                        NewsModel news = new NewsModel(tempImage, tempAuthor, tempTitle);
+                        //adding news-model object into news-model array
+                        newsdata.add(news);
+
+                    }
+
+                    //notifying main thread to update the data from invoking adapter methods
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            //
-                            try {
-                                JSONObject jsonObject=new JSONObject(requestResponseString);
-                                JSONArray jsonArray=jsonObject.getJSONArray("sources");
-                                for(int i=1;i<jsonArray.length();i++){
-                                    tempJsonObject=jsonArray.getJSONObject(i);
-                                    tempAuthor=tempJsonObject.getString("name");
-                                    System.out.println(tempAuthor);
-                                    tempTitle=tempJsonObject.getString("description");
-                                    tempImage=tempJsonObject.getString("url");
-//                                    NewsModel news=new NewsModel(tempImage,tempAuthor,tempTitle);
-//                                    newsdata.add(new NewsModel(tempImage,tempAuthor,tempTitle));
-                                    adapter.notifyDataSetChanged();
 
-                                }
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-
+                            adapter.notifyDataSetChanged();
                         }
                     });
-
-
-
-                    System.out.println("size"+newsdata.size());
-
-
-
-
-                } catch (IOException e) {
+                } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }
             }
