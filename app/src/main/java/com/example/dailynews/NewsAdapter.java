@@ -23,11 +23,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.myNewsHolder> 
     Context context;
     static NewsModel item;
     ArrayList<NewsModel> newsdata = new ArrayList<>();
+    //interface referece
+    onNewsItemClickListener newsItemClickListener;
 
 
-    public NewsAdapter(Context context, ArrayList<NewsModel> newsdata) {
+    public NewsAdapter(Context context, ArrayList<NewsModel> newsdata,onNewsItemClickListener listener) {
         this.context = context;
         this.newsdata = newsdata;
+        this.newsItemClickListener=listener;   //setting value to referece
 
 
     }
@@ -51,18 +54,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.myNewsHolder> 
         //setting news title text
         holder.title.setText(item.getNewsTitle().toString());
         holder.news_sourse.setText("source : "+item.getSource());
-        holder.img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //openting browser tab inside the application
-                String url =item.getNewsLink();  //news source link
 
-                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-                CustomTabsIntent customTabsIntent = builder.build();
-                //launching activity
-                customTabsIntent.launchUrl(context.getApplicationContext(), Uri.parse(url));
-            }
-        });
 
     }
 
@@ -84,6 +76,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.myNewsHolder> 
             author = itemView.findViewById(R.id.news_author);
             title = itemView.findViewById(R.id.news_title);
             news_sourse=itemView.findViewById(R.id.news_source);
+            //implementing view click
+            img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //setting value of Position parameter of interface
+                    newsItemClickListener.onNewsImageClicked(getAdapterPosition());
+                }
+            });
 //            title.setTypeface(NewsActivity.typeface);
         }
     }

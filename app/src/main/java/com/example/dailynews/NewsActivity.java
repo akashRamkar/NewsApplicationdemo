@@ -1,11 +1,15 @@
 package com.example.dailynews;
 
+import static com.example.dailynews.NewsAdapter.item;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -20,7 +24,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class NewsActivity extends AppCompatActivity{
+public class NewsActivity extends AppCompatActivity implements onNewsItemClickListener{
 private RecyclerView recyclerView;
 private static ArrayList<NewsModel> newsdata=new ArrayList<>();
 
@@ -45,7 +49,7 @@ private  String NEWS_URL="https://saurav.tech/NewsAPI/top-headlines/category/sci
         //setting layout manager to recyclerview
         recyclerView.setLayoutManager(layoutManager);
 
-      adapter=new NewsAdapter(getApplicationContext(),newsdata);
+      adapter=new NewsAdapter(getApplicationContext(),newsdata,this);
       recyclerView.setAdapter(adapter);
       //fetching news data from server and storing into news-model array
       fetchdata();
@@ -103,6 +107,16 @@ private  String NEWS_URL="https://saurav.tech/NewsAPI/top-headlines/category/sci
 
     }
 
+    @Override
+    public void onNewsImageClicked(int Position) {
+        //openting browser tab inside the application
+                String url =newsdata.get(Position).getNewsLink();  //news source link
+
+                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                CustomTabsIntent customTabsIntent = builder.build();
+                //launching activity
+                customTabsIntent.launchUrl(this, Uri.parse(url));
+    }
 }
 
 
