@@ -2,13 +2,17 @@ package com.example.dailynews;
 
 
 import android.content.Context;
+
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+
+import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
@@ -47,6 +51,18 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.myNewsHolder> 
         //setting news title text
         holder.title.setText(item.getNewsTitle().toString());
         holder.news_sourse.setText("source : "+item.getSource());
+        holder.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //openting browser tab inside the application
+                String url =item.getNewsLink();  //news source link
+
+                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                CustomTabsIntent customTabsIntent = builder.build();
+                //launching activity
+                customTabsIntent.launchUrl(context.getApplicationContext(), Uri.parse(url));
+            }
+        });
 
     }
 
@@ -71,5 +87,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.myNewsHolder> 
 //            title.setTypeface(NewsActivity.typeface);
         }
     }
+
 
 }
