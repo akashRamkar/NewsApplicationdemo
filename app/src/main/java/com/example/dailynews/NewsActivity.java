@@ -40,6 +40,8 @@ private  String NEWS_URL="https://saurav.tech/NewsAPI/top-headlines/category/sci
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
+        //setting up action bar title
+        setTitle("Quick news");
         //setting up font typeface
          typeface=Typeface.createFromAsset(getAssets(),"fonts/NexaBold.ttf");
 
