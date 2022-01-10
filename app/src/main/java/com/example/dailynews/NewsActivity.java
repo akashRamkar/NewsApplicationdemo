@@ -112,12 +112,13 @@ private  String NEWS_URL="https://saurav.tech/NewsAPI/top-headlines/category/sci
     @Override
     public void onNewsImageClicked(int Position) {
         //openting browser tab inside the application
+
                 String url =newsdata.get(Position).getNewsLink();  //news source link
 
                 CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
                 CustomTabsIntent customTabsIntent = builder.build();
                 //launching activity
-                customTabsIntent.launchUrl(this, Uri.parse(url));
+                customTabsIntent.launchUrl(NewsActivity.this, Uri.parse(url));
     }
 }
 
